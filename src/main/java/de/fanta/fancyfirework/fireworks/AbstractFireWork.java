@@ -92,7 +92,7 @@ public abstract class AbstractFireWork implements Keyed {
     }
 
     public ItemMeta fillItemMeta(ItemMeta meta) {
-        String name = FancyFirework.getString("itemname" + getKey());
+        String name = FancyFirework.getString("itemname." + getKey());
             meta.displayName(Component.text(ChatUtil.colorize(name)));
             List<Component> lore = FancyFirework.getStringList("itemlorebangsnap")
                 .stream()
