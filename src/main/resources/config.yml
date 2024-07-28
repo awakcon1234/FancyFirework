@@ -16,10 +16,13 @@ loottable:
     maxuse: 4
 
 itemlore:
-  - §fĐặt pháo hoa lên mặt đất
-  - §fvà đốt bằng §cDụng cụ đánh lửa
+  - ""
+  - "§7Đặt pháo hoa lên mặt đất"
+  - "§7và đốt bằng §eDụng cụ đánh lửa"
+  - "§7hoặc kích hoạt bằng §cĐá đỏ"
 itemlorebangsnap:
-  - §7Vứt item này xuống đất và tận hưởng!
+  - ""
+  - "§7Ném item này xuống đất và tận hưởng!"
 
 itemname:
   bang_snap: "&fPháo &#00FFE0&lB&#1DDFE4&la&#3BBFE8&ln&#589FEC&lg &#9360F3&lS&#B040F7&ln&#CE20FB&la&#EB00FF&lp"
