@@ -65,7 +65,7 @@ public class FireWorkGiveCommand extends SubCommand {
                     }
                 }
             } else {
-                ChatUtil.sendWarningMessage(p, "/fancyfirework give [key] <amount> <PlayerName>");
+                ChatUtil.sendWarningMessage(p, "/fancyfirework give [key] <amount> <player>");
                 return true;
             }
             if (fireWork != null) {
@@ -73,7 +73,7 @@ public class FireWorkGiveCommand extends SubCommand {
                 ItemStack itemStack = fireWork.getItemStack();
                 itemStack.setAmount(amount);
                 if (inv.firstEmpty() == -1) {
-                    ChatUtil.sendErrorMessage(p, "Item could not be added. Your inventory is full!");
+                    ChatUtil.sendErrorMessage(p, "Không thể thêm item vào túi đồ của bạn vì nó đang đầy!");
                 } else {
                     givePlayer.getInventory().addItem(itemStack);
                     ChatUtil.sendNormalMessage(givePlayer, amount + "x " + itemStack.getItemMeta().displayName() + ChatUtil.GREEN + " đã được thêm vào túi đồ của bạn");
