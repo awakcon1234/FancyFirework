@@ -1,15 +1,13 @@
 package de.fanta.fancyfirework.fireworks.defaults;
 
 import de.fanta.fancyfirework.FancyFirework;
+import de.fanta.fancyfirework.utils.ChatUtil;
 import de.fanta.fancyfirework.utils.CustomFireworkHeads;
 import java.util.UUID;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.permissions.Permission;
-import org.bukkit.permissions.PermissionDefault;
 
 public class FireWorkBatteryPurple extends FireWorkBattery {
 
@@ -24,7 +22,7 @@ public class FireWorkBatteryPurple extends FireWorkBattery {
         ItemStack itemStack = CustomFireworkHeads.getCustomTextureHead(UUID.fromString("6555a80f-7035-4ccb-8270-870380e56cde"), "Firework Rocket Purple",
                 "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNmExM2M0MDEyZGRlZjRkZDI2MGYzODUyYjFjYmJkYjlhYTU0ZTU4NDJjYzUyNTczNGU3NjdmYWY5ODM0NDc3In19fQ==");
         ItemMeta meta = itemStack.getItemMeta();
-        meta.setDisplayName(ChatColor.of("#ad14ff") + "Purple Battery");
+        meta.setDisplayName(ChatUtil.colorize("&fDàn Phun &#ad14ffMàu tím"));
         meta.setLore(FancyFirework.getPlugin().getConfig().getStringList("itemlore"));
         itemStack.setItemMeta(meta);
         return itemStack;

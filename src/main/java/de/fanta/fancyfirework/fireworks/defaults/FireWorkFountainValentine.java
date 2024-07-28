@@ -51,7 +51,7 @@ public class FireWorkFountainValentine extends FireWorkFountain {
         entity.getWorld().playSound(entity.getLocation(), Sound.ENTITY_CREEPER_PRIMED, SoundCategory.AMBIENT, 1f, 1f);
         BatteryTask batteryTask = new BatteryTask(player, entity, 20 * 40, 20 * 5, 20, 1);
         batteryTask.setSpawnFireworkTask(task -> {
-            entity.getWorld().playSound(entity.getLocation(), Sound.ENTITY_GHAST_SCREAM, SoundCategory.AMBIENT, 2f, 1.5f);
+            // entity.getWorld().playSound(entity.getLocation(), Sound.ENTITY_GHAST_SCREAM, SoundCategory.AMBIENT, 2f, 1.5f);
             spawnRandomFirework(task.getEntity().getLocation());
         });
         batteryTask.setSpawnFountainTask(task -> {

@@ -7,6 +7,7 @@ import de.fanta.fancyfirework.particle_effects.ParticleEffect;
 import de.fanta.fancyfirework.particle_effects.ShapePumpkin;
 import de.fanta.fancyfirework.particle_effects.ShapePumpkinFace;
 import de.fanta.fancyfirework.particle_effects.ShapePumpkinLeaves;
+import de.fanta.fancyfirework.utils.ChatUtil;
 import de.fanta.fancyfirework.utils.CustomFireworkHeads;
 import java.util.Random;
 import java.util.UUID;
@@ -39,7 +40,7 @@ public class FireWorkBatteryHalloween extends FireWorkBattery {
         ItemStack itemStack = CustomFireworkHeads.getCustomTextureHead(UUID.fromString("4c6c28a8-50d5-4d83-bdd9-5d605c18d420"), "Halloween Pumpkin",
                 "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvY2NlZDRiY2ZkMjExNjQ2NGRlZGYxNTdiZmM2MmRiMjZjOTU3YTlhNmFjOGJiYzUyNTYzNDY3MDg1YmUyMyJ9fX0=");
         ItemMeta meta = itemStack.getItemMeta();
-        meta.setDisplayName(ChatColor.of("#cffe4d") + "Halloween Battery");
+        meta.setDisplayName(ChatUtil.colorize("&fDàn phun &#cffe4dHalloween"));
         meta.setLore(FancyFirework.getPlugin().getConfig().getStringList("itemlore"));
         itemStack.setItemMeta(meta);
         return itemStack;

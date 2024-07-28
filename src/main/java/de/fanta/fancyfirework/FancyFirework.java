@@ -26,7 +26,7 @@ import java.util.logging.Logger;
 
 public final class FancyFirework extends JavaPlugin {
 
-    public static final String PREFIX = ChatUtil.BLUE + "[" + ChatUtil.GREEN + "FancyFirework" + ChatUtil.BLUE + "]";
+    public static final String PREFIX = ChatUtil.BLUE + "🎆 ";
     public static final String ADMIN_PERMISSION = "fancyfirework.admin";
     public static final String MOD_PERMISSION = "fancyfirework.mod";
     public static Logger LOGGER;
