@@ -2,13 +2,12 @@ package de.fanta.fancyfirework.events;
 
 import org.bukkit.damage.DamageSource;
 import org.bukkit.entity.ArmorStand;
-import org.bukkit.event.Cancellable;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
-public class FireworkDeathEvent extends EntityDeathEvent implements Cancellable {
+public class FireworkDeathEvent extends EntityDeathEvent {
 
     private boolean cancelled;
 

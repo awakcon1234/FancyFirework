@@ -27,7 +27,7 @@ public class FireWorkGiveCommand extends SubCommand {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String s1, ArgsParser args) {
         if (!(sender instanceof Player p)) {
-            ChatUtil.sendErrorMessage(sender, "You are not a Player :>");
+            ChatUtil.sendErrorMessage(sender, "Bạn không phải là người chơi");
             return true;
         }
 
@@ -45,7 +45,7 @@ public class FireWorkGiveCommand extends SubCommand {
             if (args.hasNext()) {
                 int next = args.getNext(1);
                 if (next < 1 || next > 64) {
-                    ChatUtil.sendErrorMessage(p, "Quantity must be between 1-64.");
+                    ChatUtil.sendErrorMessage(p, "Số lượng phải từ 1 đến 64.");
                     return true;
                 }
 
@@ -53,14 +53,14 @@ public class FireWorkGiveCommand extends SubCommand {
 
                 if (args.hasNext()) {
                     if (!p.hasPermission(FancyFirework.ADMIN_PERMISSION)) {
-                        ChatUtil.sendErrorMessage(p, "You do not have the permission to give fireworks to other players.");
+                        ChatUtil.sendErrorMessage(p, "Bạn không có quyền tặng pháo hoa tới một người chơi khác.");
                         return true;
                     }
                     String giveName = args.getNext();
                     givePlayer = Bukkit.getPlayer(giveName);
 
                     if (givePlayer == null) {
-                        ChatUtil.sendErrorMessage(p, "Player " + giveName + " is not online.");
+                        ChatUtil.sendErrorMessage(p, "Người chơi " + giveName + " hiện không trực tuyến.");
                         return true;
                     }
                 }
@@ -76,16 +76,16 @@ public class FireWorkGiveCommand extends SubCommand {
                     ChatUtil.sendErrorMessage(p, "Item could not be added. Your inventory is full!");
                 } else {
                     givePlayer.getInventory().addItem(itemStack);
-                    ChatUtil.sendNormalMessage(givePlayer, amount + "x " + itemStack.getItemMeta().getDisplayName() + ChatUtil.GREEN + " has been added to your inventory");
+                    ChatUtil.sendNormalMessage(givePlayer, amount + "x " + itemStack.getItemMeta().displayName() + ChatUtil.GREEN + " đã được thêm vào túi đồ của bạn");
                     if (!p.getUniqueId().equals(givePlayer.getUniqueId())) {
-                        ChatUtil.sendNormalMessage(p, amount + "x " + itemStack.getItemMeta().getDisplayName() + ChatUtil.GREEN + " has been added to " + givePlayer.getName() + "'s inventory");
+                        ChatUtil.sendNormalMessage(p, amount + "x " + itemStack.getItemMeta().displayName() + ChatUtil.GREEN + " đã được thêm vào túi đồ của " + givePlayer.getName());
                     }
                 }
             } else {
-                ChatUtil.sendErrorMessage(p, "Firework " + key + " not available.");
+                ChatUtil.sendErrorMessage(p, "Pháo hoa " + key + " hiện không khả dụng.");
             }
         } else {
-            ChatUtil.sendWarningMessage(p, "/fancyfirework give [key] <amount> <PlayerName>");
+            ChatUtil.sendWarningMessage(p, "/fancyfirework give [key] <amount> <player>");
             return true;
         }
         return true;

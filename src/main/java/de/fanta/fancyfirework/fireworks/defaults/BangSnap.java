@@ -2,10 +2,6 @@ package de.fanta.fancyfirework.fireworks.defaults;
 
 import de.fanta.fancyfirework.FancyFirework;
 import de.fanta.fancyfirework.fireworks.ItemFireWork;
-import de.fanta.fancyfirework.utils.ChatUtil;
-import net.kyori.adventure.text.Component;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
