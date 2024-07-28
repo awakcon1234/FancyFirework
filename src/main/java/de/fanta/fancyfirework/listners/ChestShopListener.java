@@ -5,6 +5,8 @@ import de.fanta.fancyfirework.FancyFirework;
 import de.fanta.fancyfirework.fireworks.AbstractFireWork;
 import de.fanta.fancyfirework.utils.FancyFireworkPriorityItemDisplayNameShortener;
 import de.iani.cubesideutils.StringUtil;
+import net.kyori.adventure.text.TextComponent;
+
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
@@ -24,7 +26,7 @@ public class ChestShopListener implements Listener {
         AbstractFireWork fireWork = plugin.getRegistry().getByItemStack(itemStack);
 
         if (fireWork != null) {
-            String displayName = fireWork.getItemStack().getItemMeta().displayName().toString();
+            String displayName = ((TextComponent) fireWork.getItemStack().getItemMeta().displayName()).content();
             String convertColorName = StringUtil.revertColors(displayName);
             String displayNameWithoutColor = StringUtil.stripColors(convertColorName);
             preShopCreationItemDisplayNameEvent.setDisplayName(displayNameWithoutColor, fancyFireworkPriorityItemDisplayNameShortener);

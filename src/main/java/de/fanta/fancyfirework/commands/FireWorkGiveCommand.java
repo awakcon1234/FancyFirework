@@ -5,6 +5,8 @@ import de.fanta.fancyfirework.fireworks.AbstractFireWork;
 import de.fanta.fancyfirework.utils.ChatUtil;
 import de.iani.cubesideutils.bukkit.commands.SubCommand;
 import de.iani.cubesideutils.commands.ArgsParser;
+import net.kyori.adventure.text.TextComponent;
+
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.command.Command;
@@ -67,14 +69,15 @@ public class FireWorkGiveCommand extends SubCommand {
                 Inventory inv = givePlayer.getInventory();
                 ItemStack itemStack = fireWork.getItemStack();
                 itemStack.setAmount(amount);
+
                 if (inv.firstEmpty() == -1) {
                     ChatUtil.sendErrorMessage(p, "Không thể thêm item vào túi đồ của bạn vì nó đang đầy!");
                 } else {
                     givePlayer.getInventory().addItem(itemStack);
-                    ChatUtil.sendNormalMessage(givePlayer, amount + "x " + itemStack.getItemMeta().displayName() + ChatUtil.GREEN + " đã được thêm vào túi đồ của bạn");
-                    if (!p.getUniqueId().equals(givePlayer.getUniqueId())) {
-                        ChatUtil.sendNormalMessage(p, amount + "x " + itemStack.getItemMeta().displayName() + ChatUtil.GREEN + " đã được thêm vào túi đồ của " + givePlayer.getName());
-                    }
+                    ChatUtil.sendNormalMessage(givePlayer, amount + "x " + ((TextComponent) itemStack.getItemMeta().displayName()).content() + ChatUtil.GREEN + " đã được thêm vào túi đồ của bạn");
+                    
+                    if (!p.getUniqueId().equals(givePlayer.getUniqueId()))
+                        ChatUtil.sendNormalMessage(p, amount + "x " + ((TextComponent) itemStack.getItemMeta().displayName()).content() + ChatUtil.GREEN + " đã được thêm vào túi đồ của " + givePlayer.getName());
                 }
             } else {
                 ChatUtil.sendErrorMessage(p, "Pháo hoa " + key + " hiện không khả dụng.");

@@ -230,7 +230,6 @@ public abstract class BlockFireWork extends AbstractFireWork {
          * This removes the entity from the world!
          */
         public void stop() {
-            Bukkit.getLogger().info("Tick Stop");
             Entity entity = getEntity();
 
             if (cancellableTask != null) {

@@ -188,11 +188,10 @@ public final class FancyFirework extends JavaPlugin {
     }
 
     public void registerPermission(Permission permission) {
-        PluginManager pm = getServer().getPluginManager();
-        Set<Permission> permissions = pm.getPermissions();
-        if (!permissions.contains(permission)) {
-            pm.addPermission(permission);
-        }
+        PluginManager pluginManager = getServer().getPluginManager();
+
+        if (pluginManager.getPermission(permission.getName()) == null)
+            pluginManager.addPermission(permission);
     }
 
     public Scheduler getScheduler() {

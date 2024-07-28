@@ -4,6 +4,8 @@ import com.vexsoftware.votifier.model.Vote;
 import com.vexsoftware.votifier.model.VotifierEvent;
 import de.fanta.fancyfirework.FancyFirework;
 import de.fanta.fancyfirework.utils.ChatUtil;
+import net.kyori.adventure.text.TextComponent;
+
 import java.util.HashMap;
 import java.util.UUID;
 import org.bukkit.Bukkit;
@@ -40,10 +42,10 @@ public class VoteListener implements Listener {
             lastVotes.put(vote.getServiceName(), System.currentTimeMillis());
 
             if (p.getInventory().firstEmpty() == -1) {
-                ChatUtil.sendErrorMessage(p, "Your inventory is full " + customfirework.getItemMeta().getDisplayName() + ChatUtil.GREEN + " could not be added to your inventory.");
+                ChatUtil.sendErrorMessage(p, "Your inventory is full " + ((TextComponent) customfirework.getItemMeta().displayName()).content() + ChatUtil.GREEN + " could not be added to your inventory.");
             } else {
                 p.getInventory().addItem(customfirework);
-                ChatUtil.sendNormalMessage(p, "You got " + customfirework.getItemMeta().getDisplayName() + ChatUtil.GREEN + " by voting");
+                ChatUtil.sendNormalMessage(p, "You got " + ((TextComponent) customfirework.getItemMeta().displayName()).content() + ChatUtil.GREEN + " by voting");
             }
         }
     }
