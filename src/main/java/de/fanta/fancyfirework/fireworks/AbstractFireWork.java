@@ -92,15 +92,26 @@ public abstract class AbstractFireWork implements Keyed {
     }
 
     public ItemMeta fillItemMeta(ItemMeta meta) {
-        String name = FancyFirework.getString("itemname." + getKey());
-            meta.displayName(Component.text(ChatUtil.colorize(name)));
-            List<Component> lore = FancyFirework.getStringList("itemlorebangsnap")
-                .stream()
-                .map(ChatUtil::colorize)
-                .map(Component::text)
-                .collect(Collectors.toList());
+        String name = FancyFirework.getString("itemname." + getKey().value());
+
+        if (name.isEmpty())
+            name = "itemname." + getKey().value();
+
+        meta.displayName(Component.text(ChatUtil.colorize(name)));
+        
+        String loreType = "itemlore";
+
+        if (this instanceof ItemFireWork)
+            loreType = "itemlorebangsnap";
+
+        List<Component> lore = FancyFirework.getStringList(loreType)
+            .stream()
+            .map(ChatUtil::colorize)
+            .map(Component::text)
+            .collect(Collectors.toList());
         
         meta.lore(lore);
+
         return meta;
     }
 }
