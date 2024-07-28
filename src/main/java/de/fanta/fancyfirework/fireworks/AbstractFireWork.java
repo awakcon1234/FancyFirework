@@ -1,7 +1,9 @@
 package de.fanta.fancyfirework.fireworks;
 
 import de.fanta.fancyfirework.FancyFirework;
-import org.antlr.v4.runtime.misc.NotNull;
+import de.fanta.fancyfirework.utils.ChatUtil;
+import net.kyori.adventure.text.Component;
+
 import org.bukkit.Keyed;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Entity;
@@ -9,12 +11,13 @@ import org.bukkit.entity.Firework;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.permissions.Permission;
-import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 /**
  * The base firework class that contains all necessary methods to create a firework.<br>
@@ -37,12 +40,12 @@ public abstract class AbstractFireWork implements Keyed {
     protected final ItemStack itemStack;
     protected final Permission permission;
 
-    protected AbstractFireWork(@NotNull NamespacedKey key) {
+    protected AbstractFireWork(NamespacedKey key) {
         this.key = Objects.requireNonNull(key, "Key must not be null!");
         this.itemStack = initItemStack(Objects.requireNonNull(createItemStack(), "ItemStack must not be null!"));
         this.permission = createPermission();
+        
     }
-
     protected abstract ItemStack createItemStack();
 
     protected abstract Permission createPermission();
@@ -79,7 +82,6 @@ public abstract class AbstractFireWork implements Keyed {
         return itemStack.clone();
     }
 
-    @NotNull
     @Override
     public final NamespacedKey getKey() {
         return key;
@@ -87,5 +89,18 @@ public abstract class AbstractFireWork implements Keyed {
 
     public Permission getPermission() {
         return permission;
+    }
+
+    public ItemMeta fillItemMeta(ItemMeta meta) {
+        String name = FancyFirework.getString("itemname" + getKey());
+            meta.displayName(Component.text(ChatUtil.colorize(name)));
+            List<Component> lore = FancyFirework.getStringList("itemlorebangsnap")
+                .stream()
+                .map(ChatUtil::colorize)
+                .map(Component::text)
+                .collect(Collectors.toList());
+        
+        meta.lore(lore);
+        return meta;
     }
 }

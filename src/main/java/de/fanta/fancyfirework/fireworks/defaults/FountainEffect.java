@@ -2,6 +2,7 @@ package de.fanta.fancyfirework.fireworks.defaults;
 
 import de.fanta.fancyfirework.fireworks.BlockFireWork;
 import org.bukkit.Location;
+import org.bukkit.entity.Entity;
 import org.bukkit.util.Vector;
 
 import java.util.function.Consumer;
@@ -35,7 +36,12 @@ public class FountainEffect {
     }
 
     public void spawn(BlockFireWork.Task task) {
-        Location location = task.getEntity().getLocation().add(0, 1.5, 0).add(getNextVector());
+        Entity entity = task.getEntity();
+
+        if (entity == null)
+            return;
+
+        Location location = entity.getLocation().add(0, 1.5, 0).add(getNextVector());
         spawnParticle.accept(location);
     }
 
@@ -43,11 +49,13 @@ public class FountainEffect {
         double x = state;
         double y = Math.sin(x * distance) * heightFactor;
         double zero = Math.PI / distance;
+        
         if (x >= zero - cutOff) {
             this.done = true;
         } else {
             state += 0.1;
         }
+
         return rotateAroundAxisY(new Vector(x, y, 0), yAxisCos, yAxisSin);
     }
 

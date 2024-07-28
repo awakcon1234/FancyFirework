@@ -1,6 +1,8 @@
 package de.fanta.fancyfirework.listners;
 
 import de.fanta.fancyfirework.PlayerInfo;
+import io.papermc.paper.event.player.AsyncChatEvent;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -9,7 +11,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerEditBookEvent;
@@ -45,7 +46,7 @@ public class AFKListener implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true)
-    public void onAsynchPlayerChatEvent(AsyncPlayerChatEvent e) {
+    public void onAsyncChatEvent(AsyncChatEvent e) {
         handleMoved(e.getPlayer());
     }
 
@@ -94,6 +95,7 @@ public class AFKListener implements Listener {
         if (!(e.getPlayer() instanceof Player player)) {
             return;
         }
+
         handleMoved(player);
     }
 
@@ -102,6 +104,7 @@ public class AFKListener implements Listener {
         if (!(event.getPlayer() instanceof Player player)) {
             return;
         }
+
         handleMoved(player);
     }
 
@@ -110,9 +113,11 @@ public class AFKListener implements Listener {
     public void onPlayerMove(PlayerMoveEvent e) {
         Location from = e.getFrom();
         Location to = e.getTo();
+
         if (to == null) {
             return;
         }
+
         if (from.getYaw() != to.getYaw() || from.getPitch() != to.getPitch()) {
             handleMoved(e.getPlayer());
         }
@@ -127,6 +132,7 @@ public class AFKListener implements Listener {
 
     private void handleMoved(Player p) {
         PlayerInfo playerInfo = playerTimes.get(p);
+
         if (playerInfo != null) {
             playerInfo.last_move_time = System.currentTimeMillis();
             if (playerInfo.afk) {
@@ -144,6 +150,7 @@ public class AFKListener implements Listener {
 
     public static void onTimer() {
         long t = System.currentTimeMillis();
+
         for (Player p : Bukkit.getServer().getOnlinePlayers()) {
             handleTimer(p, t);
         }
@@ -151,14 +158,17 @@ public class AFKListener implements Listener {
 
     private static void handleTimer(Player p, long time) {
         PlayerInfo playerInfo = playerTimes.get(p);
+
         if (playerInfo != null && !playerInfo.afk) {
             long addTime;
+
             if (time < playerInfo.last_move_time + maxIdleTime) {
                 addTime = time - playerInfo.last_check_time;
             } else {
                 addTime = (playerInfo.last_move_time + maxIdleTime) - playerInfo.last_check_time;
                 playerInfo.afk = true;
             }
+
             playerInfo.accounted_time += Math.max(addTime, 0);
             playerInfo.last_check_time = time;
         }

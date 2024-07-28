@@ -41,12 +41,14 @@ public class FireWorkGiveCommand extends SubCommand {
             String key = args.getNext();
             AbstractFireWork fireWork = plugin.getRegistry().get(NamespacedKey.fromString(key));
             int amount;
+            
             if (args.hasNext()) {
                 int next = args.getNext(1);
                 if (next < 1 || next > 64) {
                     ChatUtil.sendErrorMessage(p, "Quantity must be between 1-64.");
                     return true;
                 }
+
                 amount = next;
 
                 if (args.hasNext()) {
@@ -93,11 +95,13 @@ public class FireWorkGiveCommand extends SubCommand {
     public ArrayList<String> onTabComplete(CommandSender sender, Command command, String alias, ArgsParser args) {
         if (sender.hasPermission(FancyFirework.MOD_PERMISSION)) {
             int i = args.remaining();
+
             if (i == 1) {
                 ArrayList<String> li = new ArrayList<>();
                 plugin.getRegistry().getKeys().forEach((x) -> li.add(x.toString()));
                 return li;
             }
+
             if (sender.hasPermission(FancyFirework.ADMIN_PERMISSION)) {
                 if (i == 3) {
                     ArrayList<String> li = new ArrayList<>();
@@ -105,8 +109,10 @@ public class FireWorkGiveCommand extends SubCommand {
                     return li;
                 }
             }
+
             return new ArrayList<>();
         }
+
         return null;
     }
 

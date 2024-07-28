@@ -37,15 +37,17 @@ public class Fountain {
         } else {
             fountainEffectCounter++;
         }
-        //Spawn fountain effects
+
+        // Spawn fountain effects
         Iterator<FountainEffect> fountainEffectIterator = fountainEffects.iterator();
         while (fountainEffectIterator.hasNext()) {
             FountainEffect effect = fountainEffectIterator.next();
             effect.spawn(task);
-            if (effect.isDone()) {
+
+            if (effect.isDone())
                 fountainEffectIterator.remove();
-            }
         }
+
         tick++;
     }
 

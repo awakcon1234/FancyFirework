@@ -5,7 +5,6 @@ import de.fanta.fancyfirework.FancyFirework;
 import de.fanta.fancyfirework.particle_effects.ISpawnParticle;
 import de.fanta.fancyfirework.particle_effects.ParticleEffect;
 import de.fanta.fancyfirework.particle_effects.ShapeHeart;
-import de.fanta.fancyfirework.utils.ChatUtil;
 import de.fanta.fancyfirework.utils.CustomFireworkHeads;
 import org.bukkit.Color;
 import org.bukkit.Location;
@@ -17,7 +16,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
 
 import java.util.Random;
@@ -36,10 +34,7 @@ public class FireWorkBatteryValentine extends FireWorkBattery {
     @Override
     protected ItemStack createItemStack() {
         ItemStack itemStack = CustomFireworkHeads.getCustomTextureHead(UUID.fromString("eecce1f7-01ce-4e89-b98c-62417243bd08"), "Hearts", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMmM4ZmI2MzdkNmUxYTdiYThmYTk3ZWU5ZDI5MTVlODQzZThlYzc5MGQ4YjdiZjYwNDhiZTYyMWVlNGQ1OWZiYSJ9fX0=");
-        ItemMeta meta = itemStack.getItemMeta();
-        meta.setDisplayName(ChatUtil.colorize("&fDàn phun &#ff5cc3Valentine"));
-        meta.setLore(FancyFirework.getPlugin().getConfig().getStringList("itemlore"));
-        itemStack.setItemMeta(meta);
+        itemStack.setItemMeta(fillItemMeta(itemStack.getItemMeta()));
         return itemStack;
     }
 
@@ -90,7 +85,4 @@ public class FireWorkBatteryValentine extends FireWorkBattery {
             }
         }, 1, 1);
     }
-
 }
-
-

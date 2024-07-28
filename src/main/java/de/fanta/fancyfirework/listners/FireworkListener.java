@@ -18,8 +18,6 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.DoubleChest;
-import org.bukkit.damage.DamageSource;
-import org.bukkit.damage.DamageType;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
@@ -73,7 +71,9 @@ public class FireworkListener implements Listener {
             fireWork.onExplode(e.getEntity());
         }
         if (plugin.getFireWorkWorks().enabled()) {
-            if (entity.getCustomName() != null && entity.getCustomName().equals("FancyFirework")) {
+            String entityName = entity.customName().toString();
+
+            if (entityName != null && entityName.equals("FancyFirework")) {
                 entity.getLocation().getWorld().dropItem(entity.getLocation(), plugin.getRegistry().getRandomFireWorkItem());
             }
         }
@@ -86,17 +86,20 @@ public class FireworkListener implements Listener {
         if (!plugin.canBuild(event.getPlayer(), event.getBlock().getLocation())) {
             return;
         }
+
         if (fireWork instanceof BlockFireWork blockFireWork) {
             if (!event.getPlayer().hasPermission(blockFireWork.getPermission())) {
-                ChatUtil.sendErrorMessage(event.getPlayer(), "You do not have the permission to use this firework here!");
+                ChatUtil.sendErrorMessage(event.getPlayer(), "Bạn không có quyền sử dụng pháo hoa tại đây!");
                 event.setCancelled(true);
                 return;
             }
+
             if (plugin.isDisableFireWorkUse()) {
-                ChatUtil.sendErrorMessage(event.getPlayer(), "Fireworks can not currently be used!");
+                ChatUtil.sendErrorMessage(event.getPlayer(), "Hiện tại toàn bộ pháo hoa đang bị vô hiệu hóa!");
                 event.setCancelled(true);
                 return;
             }
+
             Block block = event.getBlockPlaced();
             blockFireWork.onPlace(block, blockFireWork.spawnAtBlock(block.getRelative(BlockFace.DOWN)), event.getPlayer());
             event.setCancelled(true);
@@ -120,15 +123,17 @@ public class FireworkListener implements Listener {
 
         if (fireWork instanceof BlockFireWork blockFireWork) {
             if (!event.getPlayer().hasPermission(blockFireWork.getPermission())) {
-                ChatUtil.sendErrorMessage(event.getPlayer(), "You do not have the permission to use this firework here!");
+                ChatUtil.sendErrorMessage(event.getPlayer(), "Bạn không có quyền sử dụng pháo hoa tại đây!");
                 event.setCancelled(true);
                 return;
             }
+
             if (plugin.isDisableFireWorkUse()) {
-                ChatUtil.sendErrorMessage(event.getPlayer(), "Fireworks can not currently be used!");
+                ChatUtil.sendErrorMessage(event.getPlayer(), "Hiện tại toàn bộ pháo hoa đang bị vô hiệu hóa!");
                 event.setCancelled(true);
                 return;
             }
+
             if (!blockFireWork.hasActiveTask(entity)) {
                 ItemStack stack = event.getPlayer().getEquipment().getItem(event.getHand());
                 if (stack.getType().equals(Material.FLINT_AND_STEEL)) {
@@ -146,8 +151,10 @@ public class FireworkListener implements Listener {
     @EventHandler
     public void onItemClick(InventoryClickEvent e) {
         ItemStack stack = e.getCurrentItem();
+
         if (stack != null) {
             AbstractFireWork fireWork = plugin.getRegistry().getByItemStack(stack);
+
             if (fireWork instanceof BlockFireWork blockFireWork) {
                 if (blockFireWork.hasActiveTask(e.getWhoClicked())) {
                     e.setCancelled(true);
@@ -157,6 +164,7 @@ public class FireworkListener implements Listener {
 
         if (e.getClick() == ClickType.NUMBER_KEY) {
             int slot = e.getHotbarButton();
+
             if (slot >= 0 && slot < 9) {
                 if (!e.getWhoClicked().getInventory().equals(e.getInventory())) {
                     ItemStack swap = e.getWhoClicked().getInventory().getItem(slot);
@@ -176,21 +184,22 @@ public class FireworkListener implements Listener {
     @EventHandler
     public void onEquip(PlayerInteractEvent e) {
         ItemStack handStack = e.getItem();
-        if (handStack == null || e.getHand() == null) {
+
+        if (handStack == null || e.getHand() == null)
             return;
-        }
+
         final EquipmentSlot armorItemSlot = handStack.getType().getEquipmentSlot();
-        if (armorItemSlot != EquipmentSlot.HEAD) {
+
+        if (armorItemSlot != EquipmentSlot.HEAD)
             return;
-        }
 
         final PlayerInventory inventory = e.getPlayer().getInventory();
         final ItemStack headStack = inventory.getItem(armorItemSlot);
         AbstractFireWork fireWork = plugin.getRegistry().getByItemStack(headStack);
+
         if (fireWork instanceof BlockFireWork blockFireWork) {
-            if (blockFireWork.hasActiveTask(e.getPlayer())) {
+            if (blockFireWork.hasActiveTask(e.getPlayer()))
                 e.setCancelled(true);
-            }
         }
     }
 
@@ -198,12 +207,13 @@ public class FireworkListener implements Listener {
     public void onPlayerQuit(PlayerQuitEvent event) {
         ItemStack stack = event.getPlayer().getInventory().getHelmet();
         AbstractFireWork fireWork = plugin.getRegistry().getByItemStack(stack);
+
         if (fireWork instanceof BlockFireWork blockFireWork) {
             if (blockFireWork.hasActiveTask(event.getPlayer())) {
                 BlockFireWork.Task task = blockFireWork.getActiveTask(event.getPlayer());
-                if (task != null) {
+
+                if (task != null)
                     task.stop();
-                }
             }
         }
     }
@@ -212,10 +222,10 @@ public class FireworkListener implements Listener {
     public void onItemDrop(PlayerDropItemEvent e) {
         ItemStack stack = e.getItemDrop().getItemStack();
         AbstractFireWork fireWork = plugin.getRegistry().getByItemStack(stack);
+
         if (fireWork instanceof BlockFireWork blockFireWork) {
-            if (blockFireWork.hasActiveTask(e.getPlayer())) {
+            if (blockFireWork.hasActiveTask(e.getPlayer()))
                 e.setCancelled(true);
-            }
         }
     }
 
@@ -223,24 +233,30 @@ public class FireworkListener implements Listener {
     public void onInteractItem(PlayerInteractEvent e) {
         if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
             ItemStack stack = e.getItem();
+
             if (stack != null) {
                 if (stack.getType() == Material.FLINT_AND_STEEL) {
                     Player player = e.getPlayer();
+
                     if (player.getLocation().getPitch() < -50) {
                         ItemStack fireworkStack = player.getInventory().getHelmet();
+
                         if (fireworkStack != null) {
                             AbstractFireWork fireWork = plugin.getRegistry().getByItemStack(fireworkStack);
+
                             if (plugin.getConfig().getBoolean("litplayer") && fireWork instanceof BlockFireWork blockFireWork) {
                                 if (!e.getPlayer().hasPermission(blockFireWork.getPermission())) {
                                     ChatUtil.sendErrorMessage(e.getPlayer(), "You do not have the permission to use this firework here!");
                                     e.setCancelled(true);
                                     return;
                                 }
+
                                 if (plugin.isDisableFireWorkUse()) {
                                     ChatUtil.sendErrorMessage(e.getPlayer(), "Fireworks can not currently be used!");
                                     e.setCancelled(true);
                                     return;
                                 }
+
                                 if (!blockFireWork.hasActiveTask(player)) {
                                     blockFireWork.onLit(player, player);
                                     damageFNS(player, e.getHand());
@@ -255,17 +271,22 @@ public class FireworkListener implements Listener {
 
     private void damageFNS(Player player, EquipmentSlot slot) {
         ItemStack stack = player.getEquipment().getItem(slot);
+
         if (player.getGameMode() != GameMode.CREATIVE || stack.getItemMeta().isUnbreakable()) {
             ItemMeta meta = stack.getItemMeta();
             int maxDurability = stack.getType().getMaxDurability();
+
             if (maxDurability > 0) {
                 int durability = meta.getEnchantLevel(Enchantment.UNBREAKING);
+
                 if (durability <= 0 || RandomUtil.SHARED_RANDOM.nextInt(durability + 1) == 0) {
                     Damageable damageableMeta = (Damageable) meta;
                     int damageOld = damageableMeta.getDamage();
+
                     if (damageOld + 1 <= maxDurability) {
                         damageableMeta.setDamage(damageOld + 1);
                         stack.setItemMeta(meta);
+                        
                         if (slot == EquipmentSlot.HAND) {
                             player.getInventory().setItemInMainHand(stack);
                         } else {
@@ -273,6 +294,7 @@ public class FireworkListener implements Listener {
                         }
                     } else {
                         player.getWorld().playSound(player.getLocation().add(0.5, 0.5, 0.5), Sound.ENTITY_ITEM_BREAK, SoundCategory.PLAYERS, 1 + (float) Math.random() * 0.1f, 1 + (float) Math.random() * 0.1f);
+                        
                         if (slot == EquipmentSlot.HAND) {
                             player.getInventory().setItemInMainHand(null);
                         } else {
@@ -286,19 +308,18 @@ public class FireworkListener implements Listener {
 
     @EventHandler
     public void onDamage(EntityDamageByEntityEvent e) {
-        if (!(e.getEntity() instanceof ArmorStand stand)) {
+        if (!(e.getEntity() instanceof ArmorStand stand))
             return;
-        }
 
         AbstractFireWork fireWork = plugin.getRegistry().getByEntity(stand);
         if (fireWork instanceof BlockFireWork blockFireWork) {
-
             if (!(e.getDamager() instanceof Player player)) {
                 e.setCancelled(true);
                 return;
             }
 
             Location loc = stand.getLocation().add(0, 1.5, 0);
+
             if (!plugin.canBuild(player, loc)) {
                 ChatUtil.sendErrorMessage(player, "You can not build here");
                 return;
@@ -311,10 +332,12 @@ public class FireworkListener implements Listener {
                 stand.setLastDamageCause(e);
                 FireworkDeathEvent fireworkDeathEvent = new FireworkDeathEvent(stand, stackList, e.getDamageSource());
                 player.getServer().getPluginManager().callEvent(fireworkDeathEvent);
+
                 if (fireworkDeathEvent.isCancelled()) {
                     e.setCancelled(true);
                     return;
                 }
+
                 stand.getWorld().dropItem(loc, stack);
                 stand.getEquipment().clear();
                 stand.remove();
@@ -325,23 +348,27 @@ public class FireworkListener implements Listener {
     @EventHandler
     public void onItemFireworkLaunch(ProjectileLaunchEvent event) {
         Projectile entity = event.getEntity();
+
         if (entity.getShooter() instanceof Player player) {
             ItemStack hand = player.getEquipment().getItemInMainHand();
             AbstractFireWork fireWork = plugin.getRegistry().getByItemStack(hand);
             if (!(fireWork instanceof ItemFireWork)) {
                 fireWork = plugin.getRegistry().getByItemStack(player.getEquipment().getItemInOffHand());
             }
+
             if (fireWork instanceof ItemFireWork itemFireWork) {
                 if (!player.hasPermission(itemFireWork.getPermission())) {
                     ChatUtil.sendErrorMessage(player, "You do not have the permission to use this firework here!");
                     event.setCancelled(true);
                     return;
                 }
+
                 if (plugin.isDisableFireWorkUse()) {
                     ChatUtil.sendErrorMessage(player, "Fireworks can not currently be used!");
                     event.setCancelled(true);
                     return;
                 }
+
                 fireWork.applyToEntity(entity);
                 itemFireWork.onLaunch(player, entity);
             }
@@ -353,32 +380,34 @@ public class FireworkListener implements Listener {
         Projectile entity = event.getEntity();
         if (entity.getShooter() instanceof Player player) {
             AbstractFireWork fireWork = plugin.getRegistry().getByEntity(entity);
-            if (fireWork instanceof ItemFireWork itemFireWork) {
+
+            if (fireWork instanceof ItemFireWork itemFireWork)
                 itemFireWork.onHit(player, event);
-            }
         }
     }
 
     @EventHandler
     public void onItemFireworkHit(PlayerEggThrowEvent event) {
         AbstractFireWork fireWork = plugin.getRegistry().getByEntity(event.getEgg());
-        if (fireWork instanceof ItemFireWork) {
+
+        if (fireWork instanceof ItemFireWork)
             event.setHatching(false);
-        }
     }
 
     @EventHandler
     public void onRedstoneSignal(BlockRedstoneEvent e) {
-        if (!plugin.isRedstonemode()) {
+        if (!plugin.isRedstonemode())
             return;
-        }
+        
         Block block = e.getBlock();
         Location loc = block.getLocation();
         World world = loc.getWorld();
-        if (world == null) {
+        
+        if (world == null)
             return;
-        }
+        
         Collection<Entity> entities = world.getNearbyEntities(loc.add(0.5, 0.5, 0.5), 1.5, 1, 1.5);
+
         for (Entity entity : entities) {
             if (entity instanceof ArmorStand stand) {
                 AbstractFireWork fireWork = plugin.getRegistry().getByEntity(stand);
@@ -395,21 +424,18 @@ public class FireworkListener implements Listener {
 
     @EventHandler
     public void onWanderingTraderSpawn(EntitySpawnEvent e) {
-        if (!(e.getEntity() instanceof WanderingTrader trader)) {
+        if (!(e.getEntity() instanceof WanderingTrader trader))
             return;
-        }
 
-        if (!plugin.getConfig().getBoolean("loottable.wanderingtrader.enabled")) {
+        if (!plugin.getConfig().getBoolean("loottable.wanderingtrader.enabled"))
             return;
-        }
 
         Random random = new Random();
         double fireworkChance = plugin.getConfig().getDouble("loottable.wanderingtrader.chance", 0.3);
         boolean hasFirework = random.nextDouble() < fireworkChance;
 
-        if (!hasFirework) {
+        if (!hasFirework)
             return;
-        }
 
         List<MerchantRecipe> recipes = new ArrayList<>(trader.getRecipes());
 
@@ -426,9 +452,11 @@ public class FireworkListener implements Listener {
     @EventHandler
     public void InventoryOpenEvent(InventoryOpenEvent e) {
         InventoryHolder holder = e.getInventory().getHolder();
+
         if (holder instanceof BlockInventoryHolder || holder instanceof DoubleChest || e.getInventory().getType() == InventoryType.ENDER_CHEST) {
             int modifyCount = 0;
             ItemStack[] storage = e.getInventory().getStorageContents();
+
             for (int i = 0; i < storage.length; i++) {
                 ItemStack newStack = plugin.getFireWorkWorks().fixFirework(storage[i]);
                 if (!Objects.equal(storage[i], newStack)) {
@@ -436,6 +464,7 @@ public class FireworkListener implements Listener {
                     modifyCount++;
                 }
             }
+
             if (modifyCount > 0) {
                 e.getInventory().setStorageContents(storage);
             }
@@ -446,6 +475,7 @@ public class FireworkListener implements Listener {
     public void EntityAddToWorld(EntityAddToWorldEvent e) {
         Entity entity = e.getEntity();
         AbstractFireWork fireWork = plugin.getRegistry().getByEntity(entity);
+        
         if (fireWork instanceof BlockFireWork blockFireWork) {
             if (blockFireWork.hasActiveTask(entity)) {
                 plugin.getScheduler().runOnEntityDelayed(entity, () -> blockFireWork.getActiveTask(entity).stop(), 1);

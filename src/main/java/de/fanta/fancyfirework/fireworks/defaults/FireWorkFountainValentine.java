@@ -6,7 +6,6 @@ import de.fanta.fancyfirework.particle_effects.ISpawnParticle;
 import de.fanta.fancyfirework.particle_effects.ParticleEffect;
 import de.fanta.fancyfirework.particle_effects.ShapeHeart;
 import de.fanta.fancyfirework.utils.CustomFireworkHeads;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
@@ -19,7 +18,6 @@ import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
 
 import java.util.List;
@@ -27,6 +25,8 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import javax.annotation.Nullable;
 
 public class FireWorkFountainValentine extends FireWorkFountain {
 
@@ -39,37 +39,44 @@ public class FireWorkFountainValentine extends FireWorkFountain {
     @Override
     protected ItemStack createItemStack() {
         ItemStack itemStack = CustomFireworkHeads.getCustomTextureHead(UUID.fromString("d844b56b-a11a-4d0b-8710-aea25178d1e"), "Heart Block", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNGIyNTA1MjcwOWYyYjVlNTFmODcyYzYwNTdjMjc2NmNjNTMyMDZjMTIzNGI3MWVjYTMzOWIzM2Y1YSJ9fX0=");
-        ItemMeta meta = itemStack.getItemMeta();
-        meta.setDisplayName(ChatColor.of("#ff5cc3") + "Valentine Fountain");
-        meta.setLore(FancyFirework.getPlugin().getConfig().getStringList("itemlore"));
-        itemStack.setItemMeta(meta);
+        itemStack.setItemMeta(fillItemMeta(itemStack.getItemMeta()));
         return itemStack;
     }
 
     @Override
-    public void onLit(Entity entity, Player player) {
+    public void onLit(Entity entity, @Nullable Player player) {
         entity.getWorld().playSound(entity.getLocation(), Sound.ENTITY_CREEPER_PRIMED, SoundCategory.AMBIENT, 1f, 1f);
         BatteryTask batteryTask = new BatteryTask(player, entity, 20 * 40, 20 * 5, 20, 1);
+        
         batteryTask.setSpawnFireworkTask(task -> {
             // entity.getWorld().playSound(entity.getLocation(), Sound.ENTITY_GHAST_SCREAM, SoundCategory.AMBIENT, 2f, 1.5f);
-            spawnRandomFirework(task.getEntity().getLocation());
+            Entity taskEntity = task.getEntity();
+
+            if (taskEntity == null)
+                return;
+
+            spawnRandomFirework(taskEntity.getLocation());
         });
+
         batteryTask.setSpawnFountainTask(task -> {
-            //Create fountain
+            // Create fountain
             Fountain fountain = new Fountain(20 * 60, random.nextInt(2, 5));
             fountain.setCreateEffects(() -> {
-                //Create next fountain effect/s
+                // Create next fountain effect/s
                 var percentage = random.nextDouble();
-                if (percentage > 0.7) {
+
+                if (percentage > 0.7)
                     entity.getWorld().playSound(entity.getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, SoundCategory.AMBIENT, 1.5f, 0.6f);
-                }
+
                 FountainEffect effect = new FountainEffect(random.nextInt(6, 20), random.nextDouble(0.4, 1), random.nextDouble(359), random.nextDouble(6));
                 effect.setSpawnParticle(location -> location.getWorld().spawnParticle(Particle.HEART, location, 1));
 
                 return List.of(effect);
             });
+
             return fountain;
         });
+
         batteryTask.start();
     }
 

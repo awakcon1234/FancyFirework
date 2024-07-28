@@ -21,9 +21,9 @@ public class SetSpawnRateCommand extends SubCommand {
             int spawnrate = args.getNext(1);
             if (spawnrate != 0) {
                 plugin.getFireWorkWorks().setSpawnRate(spawnrate);
-                ChatUtil.sendNormalMessage(sender, "Firework spawn rate is now " + spawnrate + ".");
+                ChatUtil.sendNormalMessage(sender, "Tỉ lệ sinh ra pháo hoa đã đặt thành " + spawnrate + ".");
             } else {
-                ChatUtil.sendWarningMessage(sender, "Spawn rate must be greater than 0.");
+                ChatUtil.sendWarningMessage(sender, "Tỉ lệ sinh ra pháo hoa phải lớn hơn 0");
             }
         } else {
             ChatUtil.sendWarningMessage(sender, "/fancyfirework setspawnrate [amount]");

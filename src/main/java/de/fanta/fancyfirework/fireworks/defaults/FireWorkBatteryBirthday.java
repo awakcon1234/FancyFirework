@@ -6,15 +6,14 @@ import de.fanta.fancyfirework.particle_effects.ISpawnParticle;
 import de.fanta.fancyfirework.particle_effects.ParticleEffect;
 import de.fanta.fancyfirework.particle_effects.ShapeBloon;
 import de.fanta.fancyfirework.particle_effects.ShapeBloonRibbon;
-import de.fanta.fancyfirework.utils.ChatUtil;
 import de.fanta.fancyfirework.utils.ColorUtils;
 import de.fanta.fancyfirework.utils.CustomFireworkHeads;
+
 import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
@@ -25,7 +24,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
 
 public class FireWorkBatteryBirthday extends FireWorkBattery {
@@ -39,10 +37,7 @@ public class FireWorkBatteryBirthday extends FireWorkBattery {
     @Override
     protected ItemStack createItemStack() {
         ItemStack itemStack = CustomFireworkHeads.getCustomTextureHead(UUID.fromString("f49adfe4-15dd-4672-8457-7963474b0c3d"), "Balloons", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTFiZTQ0ZTg0ZjAxMmY0M2ZhODExNzI3ZDJkNzQ2YTEwYjc1ZGQ5MjQzNzZkZDgwZmJjYjE3NzY4M2QzNTNjZSJ9fX0=");
-        ItemMeta meta = itemStack.getItemMeta();
-        meta.setDisplayName(ChatUtil.colorize("&fDàn phun &#cffe4dSinh nhật"));
-        meta.setLore(FancyFirework.getPlugin().getConfig().getStringList("itemlore"));
-        itemStack.setItemMeta(meta);
+        itemStack.setItemMeta(fillItemMeta(itemStack.getItemMeta()));
         return itemStack;
     }
 

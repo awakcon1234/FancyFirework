@@ -7,6 +7,8 @@ import de.fanta.fancyfirework.utils.ChatUtil;
 import de.iani.playerUUIDCache.CachedPlayer;
 import de.iani.playerUUIDCache.PlayerUUIDCache;
 import de.iani.treasurechest.TreasureChest;
+import net.kyori.adventure.text.Component;
+
 import java.util.HashMap;
 import java.util.UUID;
 import org.bukkit.Bukkit;
@@ -30,15 +32,19 @@ public class CubesideVoteListener implements Listener {
         Vote vote = e.getVote();
 
         ItemStack customfirework = plugin.getRegistry().getRandomHalloweenFireWorkItem();
+
         if (!plugin.getConfig().getBoolean("votereward")) {
             return;
         }
+
         if (playerUUIDCache == null) {
             return;
         }
+
         if (treasureChest == null) {
             return;
         }
+
         CachedPlayer cp = playerUUIDCache.getPlayerFromNameOrUUID(vote.getUsername().trim());
 
         if (cp != null && customfirework != null) {
@@ -47,19 +53,22 @@ public class CubesideVoteListener implements Listener {
                 lastVotes = new HashMap<>();
                 votes.put(cp.getUniqueId(), lastVotes);
             }
+
             Long lastTime = lastVotes.get(vote.getServiceName());
+
             if (lastTime != null && lastTime + TWELVE_HOURS_IN_MILLIS > System.currentTimeMillis()) {
                 return;
             }
+
             lastVotes.put(vote.getServiceName(), System.currentTimeMillis());
 
             ItemStack displayItem = new ItemStack(Material.FIREWORK_ROCKET, 1);
             ItemMeta displayItemMeta = displayItem.getItemMeta();
-            displayItemMeta.setDisplayName(ChatUtil.GREEN + "FancyFirework");
+            displayItemMeta.displayName(Component.text(ChatUtil.GREEN + "FancyFirework"));
             displayItem.setItemMeta(displayItemMeta);
 
             treasureChest.addItem(cp.getName(), displayItem, new ItemStack[] { customfirework.clone() }, 0);
-            Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "tell " + cp.getName() + " " + FancyFirework.PREFIX + ChatUtil.GREEN + " Du hast " + customfirework.getItemMeta().getDisplayName() + ChatUtil.GREEN + " erhalten und kannst diese in der Schatztruhe am Spawn abholen!");
+            // Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "tell " + cp.getName() + " " + FancyFirework.PREFIX + ChatUtil.GREEN + " Du hast " + customfirework.getItemMeta().getDisplayName() + ChatUtil.GREEN + " erhalten und kannst diese in der Schatztruhe am Spawn abholen!");
         }
     }
 }

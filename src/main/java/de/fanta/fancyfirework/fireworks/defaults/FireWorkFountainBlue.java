@@ -3,17 +3,13 @@ package de.fanta.fancyfirework.fireworks.defaults;
 import de.fanta.fancyfirework.FancyFirework;
 import de.fanta.fancyfirework.utils.CustomFireworkHeads;
 import java.util.UUID;
-import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.permissions.Permission;
-import org.bukkit.permissions.PermissionDefault;
 
 public class FireWorkFountainBlue extends FireWorkFountain {
 
-    private static final FancyFirework plugin = FancyFirework.getPlugin();
+    // private static final FancyFirework plugin = FancyFirework.getPlugin();
 
     public FireWorkFountainBlue() {
         super(new NamespacedKey(FancyFirework.getPlugin(), "fountain_blue"));
@@ -23,10 +19,8 @@ public class FireWorkFountainBlue extends FireWorkFountain {
     protected ItemStack createItemStack() {
         ItemStack itemStack = CustomFireworkHeads.getCustomTextureHead(UUID.fromString("132a9e10-fca9-4a82-8459-b298b9b283b6"), "Firework Rocket (black / blue)",
                 "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvY2FlMzUyMjM5MmRhYzdlZTRkMTRkNjExYThmYTlhN2VjZDRiNjMzMThlMzMzYjliODNlNzhmMjRmNTlhMDFiIn19fQ==");
-        ItemMeta meta = itemStack.getItemMeta();
-        meta.setDisplayName(ChatColor.BLUE + "Blue Fountain");
-        meta.setLore(FancyFirework.getPlugin().getConfig().getStringList("itemlore"));
-        itemStack.setItemMeta(meta);
+
+        itemStack.setItemMeta(fillItemMeta(itemStack.getItemMeta()));
         return itemStack;
     }
 
@@ -37,6 +31,3 @@ public class FireWorkFountainBlue extends FireWorkFountain {
     }
 
 }
-
-
-

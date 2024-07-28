@@ -2,7 +2,6 @@ package de.fanta.fancyfirework.fireworks.defaults;
 
 import de.fanta.fancyfirework.FancyFirework;
 import de.fanta.fancyfirework.fireworks.ItemFireWork;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -37,12 +36,13 @@ public class SpookyBomb extends ItemFireWork {
     protected ItemStack createItemStack() {
         ItemStack stack = new ItemStack(Material.EGG, 16);
         ItemMeta meta = stack.getItemMeta();
+
         if (meta != null) {
-            meta.setDisplayName("" + ChatColor.of("#16705A") + ChatColor.BOLD + "Spooky Bomb");
-            meta.setLore(FancyFirework.getPlugin().getConfig().getStringList("itemlorebangsnap"));
+            meta = fillItemMeta(meta);
             meta.setCustomModelData(354461);
             stack.setItemMeta(meta);
         }
+
         return stack;
     }
 
@@ -64,29 +64,30 @@ public class SpookyBomb extends ItemFireWork {
 
         for (Entity entity : world.getNearbyEntities(loc, 3, 3, 3)) {
             if (entity instanceof Player spookyPlayer) {
-                if (spookyPlayers.contains(spookyPlayer.getUniqueId())) {
+                if (spookyPlayers.contains(spookyPlayer.getUniqueId()))
                     return;
-                }
-                if (spookyPlayer.isOnline()) {
-                    spookyPlayers.add(spookyPlayer.getUniqueId());
-                    spookyPlayer.addPotionEffect(new PotionEffect(PotionEffectType.DARKNESS, 85, 0, true));
-                    spookyPlayer.playSound(spookyPlayer, Sound.ENTITY_GHAST_HURT, SoundCategory.AMBIENT, 2, 1);
-                    AtomicInteger tick = new AtomicInteger();
+                
+                if (!spookyPlayer.isOnline())
+                    return;
 
-                    plugin.getScheduler().runOnEntityAtFixedRate(spookyPlayer, task -> {
-                        if (spookyPlayer.isOnline()) {
-                            if (tick.get() < 4) {
-                                tick.getAndIncrement();
-                                spookyPlayer.playSound(spookyPlayer, Sound.ENTITY_WARDEN_HEARTBEAT, SoundCategory.AMBIENT, 1, 1);
-                            } else {
-                                spookyPlayers.remove(spookyPlayer.getUniqueId());
-                                task.cancel();
-                            }
+                spookyPlayers.add(spookyPlayer.getUniqueId());
+                spookyPlayer.addPotionEffect(new PotionEffect(PotionEffectType.DARKNESS, 85, 0, true));
+                spookyPlayer.playSound(spookyPlayer, Sound.ENTITY_GHAST_HURT, SoundCategory.AMBIENT, 2, 1);
+                AtomicInteger tick = new AtomicInteger();
+
+                plugin.getScheduler().runOnEntityAtFixedRate(spookyPlayer, task -> {
+                    if (spookyPlayer.isOnline()) {
+                        if (tick.get() < 4) {
+                            tick.getAndIncrement();
+                            spookyPlayer.playSound(spookyPlayer, Sound.ENTITY_WARDEN_HEARTBEAT, SoundCategory.AMBIENT, 1, 1);
                         } else {
                             spookyPlayers.remove(spookyPlayer.getUniqueId());
+                            task.cancel();
                         }
-                    }, 16, 16);
-                }
+                    } else {
+                        spookyPlayers.remove(spookyPlayer.getUniqueId());
+                    }
+                }, 16, 16);
             }
         }
     }

@@ -50,5 +50,4 @@ public abstract class ItemFireWork extends AbstractFireWork {
         FancyFirework.getPlugin().registerPermission(permission);
         return permission;
     }
-
 }

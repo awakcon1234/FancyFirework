@@ -7,13 +7,11 @@ import de.fanta.fancyfirework.particle_effects.ParticleEffect;
 import de.fanta.fancyfirework.particle_effects.ShapePumpkin;
 import de.fanta.fancyfirework.particle_effects.ShapePumpkinFace;
 import de.fanta.fancyfirework.particle_effects.ShapePumpkinLeaves;
-import de.fanta.fancyfirework.utils.ChatUtil;
 import de.fanta.fancyfirework.utils.CustomFireworkHeads;
 import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicInteger;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
@@ -24,7 +22,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
 
 public class FireWorkBatteryHalloween extends FireWorkBattery {
@@ -39,10 +36,8 @@ public class FireWorkBatteryHalloween extends FireWorkBattery {
     protected ItemStack createItemStack() {
         ItemStack itemStack = CustomFireworkHeads.getCustomTextureHead(UUID.fromString("4c6c28a8-50d5-4d83-bdd9-5d605c18d420"), "Halloween Pumpkin",
                 "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvY2NlZDRiY2ZkMjExNjQ2NGRlZGYxNTdiZmM2MmRiMjZjOTU3YTlhNmFjOGJiYzUyNTYzNDY3MDg1YmUyMyJ9fX0=");
-        ItemMeta meta = itemStack.getItemMeta();
-        meta.setDisplayName(ChatUtil.colorize("&fDàn phun &#cffe4dHalloween"));
-        meta.setLore(FancyFirework.getPlugin().getConfig().getStringList("itemlore"));
-        itemStack.setItemMeta(meta);
+                
+        itemStack.setItemMeta(fillItemMeta(itemStack.getItemMeta()));
         return itemStack;
     }
 
@@ -106,5 +101,3 @@ public class FireWorkBatteryHalloween extends FireWorkBattery {
     }
 
 }
-
-

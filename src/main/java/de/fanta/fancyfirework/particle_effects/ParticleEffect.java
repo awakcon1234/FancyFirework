@@ -21,6 +21,7 @@ public class ParticleEffect {
         this.shape = shape;
         shape.createVectors();
         shapeVectors = shape.getVectors();
+
         if (rotation != null) {
             shapeVectors = shapeVectors.stream().map(vector -> VectorUtils.rotateVector(vector.clone(), rotation.getX(), rotation.getY(), rotation.getZ())).toList();
         }
@@ -33,5 +34,4 @@ public class ParticleEffect {
             origin.subtract(vector);
         }
     }
-
 }

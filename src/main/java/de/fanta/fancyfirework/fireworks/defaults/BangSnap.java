@@ -3,7 +3,10 @@ package de.fanta.fancyfirework.fireworks.defaults;
 import de.fanta.fancyfirework.FancyFirework;
 import de.fanta.fancyfirework.fireworks.ItemFireWork;
 import de.fanta.fancyfirework.utils.ChatUtil;
-import net.md_5.bungee.api.ChatColor;
+import net.kyori.adventure.text.Component;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -29,8 +32,7 @@ public class BangSnap extends ItemFireWork {
         ItemMeta meta = stack.getItemMeta();
 
         if (meta != null) {
-            meta.setDisplayName(ChatUtil.colorize("&fPháo &eBang Snap"));
-            meta.setLore(FancyFirework.getPlugin().getConfig().getStringList("itemlorebangsnap"));
+            meta = fillItemMeta(meta);
             meta.setCustomModelData(1286028928);
             stack.setItemMeta(meta);
         }

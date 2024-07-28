@@ -3,6 +3,7 @@ package de.fanta.fancyfirework.fireworks;
 import de.fanta.fancyfirework.FancyFirework;
 import de.fanta.fancyfirework.schedular.CancellableTask;
 import de.iani.cubesideutils.bukkit.items.ItemGroups;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -40,6 +41,7 @@ public abstract class BlockFireWork extends AbstractFireWork {
 
     protected BlockFireWork(NamespacedKey key) {
         super(key);
+        // itemStack.setItemMeta(fillItemMeta(itemStack.getItemMeta()));
     }
 
     /**

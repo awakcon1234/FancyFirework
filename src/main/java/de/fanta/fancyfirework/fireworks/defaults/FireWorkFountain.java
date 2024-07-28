@@ -1,6 +1,5 @@
 package de.fanta.fancyfirework.fireworks.defaults;
 
-import de.fanta.fancyfirework.FancyFirework;
 import org.bukkit.FireworkEffect;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
@@ -12,53 +11,69 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.FireworkMeta;
-import org.bukkit.permissions.Permission;
 import org.bukkit.util.Vector;
 
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
+import javax.annotation.Nullable;
+
 public abstract class FireWorkFountain extends FireWorkBattery {
 
-    private final FancyFirework plugin = FancyFirework.getPlugin();
+    // private final FancyFirework plugin = FancyFirework.getPlugin();
 
     public FireWorkFountain(NamespacedKey namespacedKey) {
         super(namespacedKey);
     }
 
     @Override
-    public void onLit(Entity entity, Player player) {
+    public void onLit(Entity entity, @Nullable Player player) {
         entity.getWorld().playSound(entity.getLocation(), Sound.ENTITY_CREEPER_PRIMED, SoundCategory.AMBIENT, 1f, 1f);
         BatteryTask batteryTask = new BatteryTask(player, entity, 20 * 40, 20 * 5, 20, 1);
+        
         batteryTask.setSpawnFireworkTask(task -> {
             // entity.getWorld().playSound(entity.getLocation(), Sound.ENTITY_GHAST_SCREAM, SoundCategory.AMBIENT, 2f, 1.5f);
-            spawnRandomFirework(task.getEntity().getLocation());
+            Entity taskEntity = task.getEntity();
+
+            if (taskEntity == null)
+                return;
+
+            spawnRandomFirework(taskEntity.getLocation());
         });
+
         batteryTask.setSpawnFountainTask(task -> {
-            //Create fountain
+            // Create fountain
             Fountain fountain = new Fountain(20 * 60, random.nextInt(2, 5));
             fountain.setCreateEffects(() -> {
-                //Create next fountain effect/s
+                // Create next fountain effect/s
                 var percentage = random.nextDouble();
-                if (percentage > 0.7) {
+                
+                if (percentage > 0.7)
                     entity.getWorld().playSound(entity.getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, SoundCategory.AMBIENT, 1.5f, 0.6f);
-                }
 
                 FountainEffect effect = new FountainEffect(random.nextInt(6, 20), random.nextDouble(0.4, 1), random.nextDouble(359), random.nextDouble(6));
                 effect.setSpawnParticle(location -> location.getWorld().spawnParticle(Particle.DUST, location, 6, new Particle.DustOptions(randomColor(), 1.5f)));
 
                 return List.of(effect);
             });
+
             return fountain;
         });
+
         batteryTask.start();
     }
 
     @Override
     public void onTick(Task task, boolean active) {
-        Location loc = task.getEntity().getLocation().add(0, 1.5, 0);
+        Entity entity = task.getEntity();
+
+        if (entity == null)
+            return;
+
+        Location loc = entity.getLocation().add(0, 1.5, 0);
         loc.getWorld().spawnParticle(Particle.FLAME, loc, 1, 0, 0, 0, 0.025);
+
         if (task instanceof BatteryTask batteryTask) {
             if (batteryTask.getFireworkCounter() == 0) {
                 batteryTask.setFireworkCooldown(random.nextInt(20 * 4, 20 * 8));
@@ -78,6 +93,3 @@ public abstract class FireWorkFountain extends FireWorkBattery {
         firework.setFireworkMeta(fireworkMeta);
     }
 }
-
-
-

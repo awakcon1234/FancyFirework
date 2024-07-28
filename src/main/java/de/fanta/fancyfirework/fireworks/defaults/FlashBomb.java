@@ -2,7 +2,6 @@ package de.fanta.fancyfirework.fireworks.defaults;
 
 import de.fanta.fancyfirework.FancyFirework;
 import de.fanta.fancyfirework.fireworks.ItemFireWork;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -15,12 +14,10 @@ import org.bukkit.entity.Projectile;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.permissions.Permission;
-import org.bukkit.permissions.PermissionDefault;
 
 public class FlashBomb extends ItemFireWork {
 
-    private static final FancyFirework plugin = FancyFirework.getPlugin();
+    // private static final FancyFirework plugin = FancyFirework.getPlugin();
 
     public FlashBomb() {
         super(new NamespacedKey(FancyFirework.getPlugin(), "flash_bomb"));
@@ -30,12 +27,13 @@ public class FlashBomb extends ItemFireWork {
     protected ItemStack createItemStack() {
         ItemStack stack = new ItemStack(Material.EGG, 16);
         ItemMeta meta = stack.getItemMeta();
+
         if (meta != null) {
-            meta.setDisplayName("" + ChatColor.of("#d1fdff") + ChatColor.BOLD + "Flash Bomb");
-            meta.setLore(FancyFirework.getPlugin().getConfig().getStringList("itemlorebangsnap"));
+            meta = fillItemMeta(meta);
             meta.setCustomModelData(12156465);
             stack.setItemMeta(meta);
         }
+
         return stack;
     }
 

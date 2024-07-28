@@ -8,6 +8,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
 public class FancyFireWorkCommand extends SubCommand {
+
     private final FancyFirework plugin;
 
     public FancyFireWorkCommand(FancyFirework plugin) {
@@ -16,7 +17,7 @@ public class FancyFireWorkCommand extends SubCommand {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String alias, String commandString, ArgsParser args) {
-        ChatUtil.sendNormalMessage(sender, "FancyFirework v" + plugin.getDescription().getVersion() + " by " + plugin.getDescription().getAuthors());
+        ChatUtil.sendNormalMessage(sender, "FancyFirework v" + plugin.getPluginMeta().getVersion());
         return true;
     }
 }

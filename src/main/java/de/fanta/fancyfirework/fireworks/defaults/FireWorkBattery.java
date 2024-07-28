@@ -26,6 +26,8 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import javax.annotation.Nullable;
+
 public abstract class FireWorkBattery extends BlockFireWork {
 
     protected FireWorkBattery(NamespacedKey namespacedKey) {
@@ -34,20 +36,20 @@ public abstract class FireWorkBattery extends BlockFireWork {
 
     @Override
     public void onPlace(Block block, ArmorStand stand, Player player) {
-        //Nothing
+        // Nothing
     }
 
     @Override
-    public void onLit(Entity entity, Player player) {
+    public void onLit(Entity entity, @Nullable Player player) {
         entity.getWorld().playSound(entity.getLocation(), Sound.ENTITY_CREEPER_PRIMED, SoundCategory.AMBIENT, 1f, 1f);
 
         BatteryTask batteryTask = new BatteryTask(player, entity, 20 * 60, 20 * 5, 20, random.nextInt(20 * 5, 20 * 13));
         batteryTask.setSpawnFireworkTask(task -> spawnRandomFirework(entity.getLocation()));
         batteryTask.setSpawnFountainTask(task -> {
-            //Create fountain
+            // Create fountain
             Fountain fountain = new Fountain(random.nextInt(20 * 6, 20 * 8), random.nextInt(5, 10));
             fountain.setCreateEffects(() -> {
-                //Create next fountain effect/s
+                // Create next fountain effect/s
                 // entity.getWorld().playSound(entity.getLocation(), Sound.ENTITY_GHAST_SCREAM, SoundCategory.AMBIENT, 2f, 1.5f);
 
                 FountainEffect effect = new FountainEffect(random.nextInt(6, 20), random.nextDouble(0.4, 1), random.nextDouble(359), random.nextDouble(6));
@@ -55,14 +57,21 @@ public abstract class FireWorkBattery extends BlockFireWork {
 
                 return List.of(effect);
             });
+            
             return fountain;
         });
+
         batteryTask.start();
     }
 
     @Override
     public void onTick(Task task, boolean active) {
-        Location loc = task.getEntity().getLocation().add(0, 1.5, 0);
+        Entity entity = task.getEntity();
+
+        if (entity == null)
+            return;
+
+        Location loc = entity.getLocation().add(0, 1.5, 0);
         loc.getWorld().spawnParticle(Particle.FLAME, loc, 1, 0, 0, 0, 0.025);
 
         if (task instanceof BatteryTask batteryTask) {

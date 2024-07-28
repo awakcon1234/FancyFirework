@@ -2,6 +2,8 @@ package de.fanta.fancyfirework;
 
 import de.fanta.fancyfirework.fireworks.AbstractFireWork;
 import de.fanta.fancyfirework.listners.AFKListener;
+import net.kyori.adventure.text.Component;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
@@ -27,15 +29,15 @@ public class FireWorkWorks {
     public FireWorkWorks() {
         this.enabled = plugin.getConfig().getBoolean("enabled");
         this.rand = new Random();
-        if (enabled) {
+        
+        if (enabled)
             enableTask();
-        }
     }
 
     public void enableTask() {
-        for (Player player : Bukkit.getOnlinePlayers()) {
+        for (Player player : Bukkit.getOnlinePlayers())
             startTaskFor(player);
-        }
+
         plugin.getLogger().log(Level.INFO, "Started spawning random firework.");
     }
 
@@ -44,13 +46,17 @@ public class FireWorkWorks {
     }
 
     public void startTaskFor(Player player) {
-        if (!enabled) return;
+        if (!enabled)
+            return;
+
         plugin.getScheduler().runOnEntityAtFixedRate(player, task -> {
             if (player == null || !player.isOnline() || !enabled) {
                 task.cancel();
                 return;
             }
-            if (rand.nextInt(getSpawnRate()) == 0) spawnFirework(player);
+
+            if (rand.nextInt(getSpawnRate()) == 0)
+                spawnFirework(player);
         }, 1L, 1L);
     }
 
@@ -60,6 +66,7 @@ public class FireWorkWorks {
         Location toppos = world.getHighestBlockAt(loc.getBlockX(), loc.getBlockZ(), HeightMap.MOTION_BLOCKING).getLocation();
         boolean sky = loc.getBlockY() > toppos.getBlockY();
         PlayerInfo playerInfo = AFKListener.playerTimes.get(p);
+        
         if (sky && (p.getGameMode() == GameMode.SURVIVAL || p.getGameMode() == GameMode.ADVENTURE) && !FancyFirework.getPlugin().isVanish(p) && !playerInfo.afk) {
             Firework firework = (Firework) world.spawnEntity(loc, EntityType.FIREWORK_ROCKET);
             firework.setVelocity(new Vector((rand.nextBoolean() ? 1 : -1) * rand.nextDouble(0.01), rand.nextDouble(0.5, 1.5), (rand.nextBoolean() ? 1 : -1) * rand.nextDouble(0.01)));
@@ -69,7 +76,7 @@ public class FireWorkWorks {
             fireworkMeta.setPower(rand.nextInt(2) + 1);
             firework.setFireworkMeta(fireworkMeta);
             firework.setRotation(rand.nextInt(20), rand.nextInt(20));
-            firework.setCustomName("FancyFirework");
+            firework.customName(Component.text("FancyFirework"));
         }
     }
 
@@ -86,6 +93,7 @@ public class FireWorkWorks {
                 disableTask();
             }
         }
+
         plugin.getConfig().set("enabled", enabled);
         plugin.saveConfig();
     }
@@ -110,13 +118,14 @@ public class FireWorkWorks {
         if (item == null) {
             return item;
         }
+
         AbstractFireWork fireWork = plugin.getRegistry().getByItemStack(item);
         if (fireWork != null) {
             ItemStack fireWorkItem = fireWork.getItemStack();
             fireWorkItem.setAmount(item.getAmount());
             return fireWorkItem;
         }
-       return item;
+
+        return item;
     }
 }
-

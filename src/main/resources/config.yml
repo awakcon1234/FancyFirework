@@ -14,8 +14,40 @@ loottable:
     minprice: 8
     maxprice: 32
     maxuse: 4
+
 itemlore:
-  - '§aThe fireworks can be placed'
-  - '§aand lit with a flint and steel'
+  - §fĐặt pháo hoa lên mặt đất
+  - §fvà đốt bằng §cDụng cụ đánh lửa
 itemlorebangsnap:
-  - '§aThrow them on the floor for fun'
+  - §7Vứt item này xuống đất và tận hưởng!
+
+itemname:
+  bang_snap: "&fPháo &#00FFE0&lB&#1DDFE4&la&#3BBFE8&ln&#589FEC&lg &#9360F3&lS&#B040F7&ln&#CE20FB&la&#EB00FF&lp"
+  battery_birthday: "&fDàn pháo hoa &#cffe4dSinh nhật"
+  battery_blue: "&fDàn pháo hoa &bXanh lam"
+  battery_green: "&fDàn pháo hoa &aXanh lá"
+  battery_halloween: "&fDàn pháo hoa &#cffe4dHalloween"
+  battery_orange: "&fDàn pháo hoa &#fe8a06Màu cam"
+  battery_pink: "&fDàn pháo hoa &#ff14d4Màu hồng"
+  battery_pride: "&fDàn pháo hoa &#3494E6&lG&#4092E2&li&#4B8FDF&lớ&#578DDB&li &#6E88D4&lt&#7986D1&lí&#8583CD&ln&#9081CA&lh &#A77CC2&lm&#B37ABF&lớ&#BE78BB&li &#D573B4&l=&#E170B1&l)&#EC6EAD&l)"
+  battery_purple: "&fDàn pháo hoa &#ad14ffMàu tím"
+  battery_rainbow: "&fDàn pháo hoa &#FF0000&lC&#FF7F00&lầ&#FFFF00&lu &#00FF00&lV&#0000FF&lồ&#4B0082&ln&#9400D3&lg"
+  battery_red: "&fDàn pháo hoa &cMàu đỏ"
+  battery_simple: "&fDàn pháo hoa"
+  battery_valentine: "&fDàn pháo hoa &#ff5cc3Valentine"
+  battery_yellow: "&fDàn pháo hoa &eMàu vàng"
+  fountain_blue: "&fDàn pháo hoa &bXanh lam"
+  fountain_green: "&fDàn pháo hoa &aXanh lá"
+  fountain_orange: "&fDàn pháo hoa &#fe8a06Màu cam"
+  fountain_pink: "&fDàn pháo hoa &#ff14d4Màu hồng"
+  fountain_pride: "&fDàn pháo hoa &#3494E6&lG&#4092E2&li&#4B8FDF&lớ&#578DDB&li &#6E88D4&lt&#7986D1&lí&#8583CD&ln&#9081CA&lh &#A77CC2&lm&#B37ABF&lớ&#BE78BB&li &#D573B4&l=&#E170B1&l)&#EC6EAD&l)"
+  fountain_purple: "&fDàn pháo hoa &#ad14ffMàu tím"
+  fountain_rainbow: "&fDàn pháo hoa &#FF0000&lC&#FF7F00&lầ&#FFFF00&lu &#00FF00&lV&#0000FF&lồ&#4B0082&ln&#9400D3&lg"
+  fountain_red: "&fDàn pháo hoa &cMàu đỏ"
+  fountain_valentine: "&fDàn pháo hoa &#ff5cc3Valentine"
+  fountain_white: "&fDàn pháo hoa Màu trắng"
+  fountain_yellow: "&fDàn pháo hoa &eMàu vàng"
+  flash_bomb: "&#D0F5FF&lL&#D4F6F7&lự&#D7F6EE&lu &#DEF7DE&lđ&#E2F8D5&lạ&#E6F8CD&ln &#EDF9BD&lc&#F1FAB4&lh&#F4FAAC&lo&#F8FBA4&lá&#FBFB9B&ln&#FFFC93&lg"
+  smoke_bomb: "&#FFFC93&lL&#FFF29C&lự&#FFE9A4&lu &#FFD6B6&lđ&#FFCCBF&lạ&#FFC3C7&ln &#FFB0D9&lk&#FFA6E2&lh&#FF9DEA&ló&#FF93F3&li"
+  smoke_bomb_color: "&#FF0000&lL&#FF2A00&lự&#FF5500&lu &#FFAA00&lđ&#FFD400&lạ&#FFFF00&ln &#55FF00&lk&#00FF00&lh&#00AA55&ló&#0055AA&li &#1900D5&lc&#3200AC&ló &#63009D&lm&#7C00B8&là&#9400D3&lu"
+  spooky_bomb: "&#FFE259&lL&#FFDD58&lự&#FFD958&lu &#FFD057&lđ&#FFCB56&lạ&#FFC755&ln &#FFBE54&lt&#FFB953&lr&#FFB553&lẻ &#FFAC52&le&#FFA751&lm"

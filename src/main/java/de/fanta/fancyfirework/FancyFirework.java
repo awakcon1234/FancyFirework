@@ -20,6 +20,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.kitteh.vanish.VanishPlugin;
 
+import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -46,6 +47,14 @@ public final class FancyFirework extends JavaPlugin {
 
     public static FancyFirework getPlugin() {
         return plugin;
+    }
+
+    public static String getString(String path) {
+        return plugin.getConfig().getString(path);
+    }
+
+    public static List<String> getStringList(String path) {
+        return plugin.getConfig().getStringList(path);
     }
 
     @Override
