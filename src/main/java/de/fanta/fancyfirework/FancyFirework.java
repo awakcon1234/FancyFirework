@@ -9,6 +9,7 @@ import de.fanta.fancyfirework.schedular.FoliaScheduler;
 import de.fanta.fancyfirework.schedular.Scheduler;
 import de.fanta.fancyfirework.utils.ChatUtil;
 import de.fanta.fancyfirework.utils.WorldGuardHelper;
+import de.iani.cubesideutils.bukkit.commands.CommandRouter;
 import de.myzelyam.api.vanish.VanishAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -115,7 +116,7 @@ public final class FancyFirework extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        getRegistry().clearAllFirework();
     }
 
     public FireWorkWorks getFireWorkWorks() {

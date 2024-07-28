@@ -16,27 +16,32 @@ public class FireWorksRegistry {
     private final Map<NamespacedKey, AbstractFireWork> valentineFireWorkMap;
     private final Map<NamespacedKey, AbstractFireWork> halloweenFireWorkMap;
 
-    private final FancyFirework plugin;
+    // private final FancyFirework plugin;
 
     FireWorksRegistry(FancyFirework plugin) {
         this.fireWorkMap = new HashMap<>();
         this.valentineFireWorkMap = new HashMap<>();
         this.halloweenFireWorkMap = new HashMap<>();
-        this.plugin = plugin;
+        // this.plugin = plugin;
     }
 
     public void register(AbstractFireWork fireWork) {
-        Preconditions.checkArgument(fireWork != null, "Firework cannot be null!");
+        Preconditions.checkArgument(fireWork != null, "Không thể đăng ký một pháo hoa trống được!");
         NamespacedKey key = fireWork.getKey();
-        Preconditions.checkArgument(!fireWorkMap.containsKey(key), "A firework with the key " + key + " has already been registered!");
+        Preconditions.checkArgument(!fireWorkMap.containsKey(key), "Một pháo hoa với khóa " + key + " đã được đăng ký sẵn rồi!");
         fireWorkMap.put(key, fireWork);
-        if (key.toString().contains("valentine")) {
-            valentineFireWorkMap.put(key, fireWork);
-        }
 
-        if (key.toString().contains("halloween") || key.toString().contains("spooky")) {
+        if (key.toString().contains("valentine"))
+            valentineFireWorkMap.put(key, fireWork);
+
+        if (key.toString().contains("halloween") || key.toString().contains("spooky"))
             halloweenFireWorkMap.put(key, fireWork);
-        }
+    }
+
+    public void clearAllFirework() {
+        this.fireWorkMap.clear();
+        this.valentineFireWorkMap.clear();
+        this.halloweenFireWorkMap.clear();
     }
 
     public AbstractFireWork get(NamespacedKey key) {
@@ -58,9 +63,10 @@ public class FireWorksRegistry {
 
     public AbstractFireWork getByEntity(Entity entity) {
         String keyString = entity.getPersistentDataContainer().get(AbstractFireWork.FIREWORK_ID, PersistentDataType.STRING);
-        if (keyString != null) {
+        
+        if (keyString != null)
             return get(NamespacedKey.fromString(keyString));
-        }
+
         return null;
     }
 
@@ -93,5 +99,4 @@ public class FireWorksRegistry {
         assert fireWork != null;
         return fireWork.getItemStack().clone();
     }
-
 }

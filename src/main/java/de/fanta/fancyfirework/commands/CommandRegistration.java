@@ -15,6 +15,5 @@ public record CommandRegistration(FancyFirework plugin) {
         fancyFireworkRouter.addCommandMapping(new SetSpawnRateCommand(plugin), "setSpawnRate");
         fancyFireworkRouter.addCommandMapping(new FireWorkGiveCommand(plugin), "give");
         fancyFireworkRouter.addCommandMapping(new FancyFireWorkReloadCommand(plugin), "reload");
-
     }
 }
