@@ -31,11 +31,6 @@ public class FireWorkGiveCommand extends SubCommand {
             return true;
         }
 
-        /*if (args.remaining() != 1 && args.remaining() != 2) {
-            ChatUtil.sendWarningMessage(p, "/fancyfirework give [key] <amount>");
-            return true;
-        }*/
-
         Player givePlayer = p;
         if (args.hasNext()) {
             String key = args.getNext();
@@ -65,9 +60,9 @@ public class FireWorkGiveCommand extends SubCommand {
                     }
                 }
             } else {
-                ChatUtil.sendWarningMessage(p, "/fancyfirework give [key] <amount> <player>");
-                return true;
+                amount = 1;
             }
+
             if (fireWork != null) {
                 Inventory inv = givePlayer.getInventory();
                 ItemStack itemStack = fireWork.getItemStack();
@@ -85,9 +80,10 @@ public class FireWorkGiveCommand extends SubCommand {
                 ChatUtil.sendErrorMessage(p, "Pháo hoa " + key + " hiện không khả dụng.");
             }
         } else {
-            ChatUtil.sendWarningMessage(p, "/fancyfirework give [key] <amount> <player>");
+            ChatUtil.sendWarningMessage(p, "/ff give <key> [amount] [player]");
             return true;
         }
+
         return true;
     }
 
